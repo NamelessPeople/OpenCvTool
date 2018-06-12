@@ -197,7 +197,7 @@ int m( Mat queryImage,Mat trainImage ,Mat &outMat)
     vector<DMatch> matches;
     bestMatch(queryDescriptor, trainDescriptor, matches);
 
-    vector<vector<DMatch>> knnmatches;
+//    vector<vector<DMatch>> knnmatches;
 //    knnMatch(queryDescriptor, trainDescriptor, knnmatches, 2);
 
 

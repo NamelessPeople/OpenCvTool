@@ -44,44 +44,15 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
         grayImage.setImageBitmap(bitmap2);
         openCvUtils = new OpenCvUtils();
-        copyCascadeFile();
+        mCascadeFile = openCvUtils.copyCascadeFile(this);
         openCvUtils.loadCascade(mCascadeFile.getAbsolutePath());
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        openCvUtils.pictrueRecognition(bitmap,bitmap2);
-                    }
-                }).start();
+                openCvUtils.faceRecognition(bitmap);
             }
         });
     }
-    public void copyCascadeFile(){
-        try {
-            // load cascade file from application resources
-            InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-            File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-            mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
-            if(mCascadeFile.exists())
-                return;
-            FileOutputStream os = new FileOutputStream(mCascadeFile);
 
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = is.read(buffer)) != -1) {
-                os.write(buffer, 0, bytesRead);
-            }
-            is.close();
-            os.close();
-
-
-
-            cascadeDir.delete();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
